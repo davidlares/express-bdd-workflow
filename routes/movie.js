@@ -52,4 +52,16 @@ router.put('/:id', function(req,res,next){
   res.status(200).json({movie: new_movie})
 })
 
+router.delete('/:id', function(req,res,next){
+  console.log('DELETE: ', req.params.id)
+  if(!req.params.id){
+    res
+      .status(403)
+      .json({message: 'Params Request', error: true})
+  }
+  let id = req.params.id
+  delete Movie[id]
+  res.status(400).json({})
+})
+
 module.exports = router;
