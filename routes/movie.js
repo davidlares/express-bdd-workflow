@@ -1,11 +1,12 @@
 "use strict"
 
-var express = require('express');
-var _ = require('lodash')
-var router = express.Router();
+const express = require('express');
+const _ = require('lodash')
+const router = express.Router();
+const Movie = require('../lib/models/movie')
 
 // temporary BD
-var Movie = {}
+// var Movie = {}
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
@@ -17,14 +18,35 @@ router.post('/', function(req, res, next) {
   }
 
   let _movie = req.body
-  _movie._id = Date.now()
-  Movie[_movie._id] = _movie
-  res.status(201).json({movie: Movie[_movie._id]})
+  new Movie({
+    title: _movie.title,
+    year: _movie.year
+  })
+  .save((err, movie) => {
+    if(err){
+      res
+        .status(403)
+        .json({message: 'Error Request', error: true})
+    }
+    // _movie._id = Date.now()
+    // Movie[_movie._id] = _movie
+    // res.status(201).json({movie: Movie[_movie._id]})
+    res.status(201).json({movie: movie})
+  })
+
 });
 
 router.get('/', function(req,res,next){
   console.log('GET: ', req.body)
-  res.status(200).json({movies: _.values(Movie)})
+    Movie.find({}, (err, movies) => {
+      if(err){
+        res
+        .status(403)
+        .json({message: 'Error Request', error: true})
+      }
+      res.status(200).json({movies: movies})
+  })
+  // res.status(200).json({movies: _.values(Movie)})
 })
 
 router.get('/:id', function(req,res,next){
@@ -34,22 +56,33 @@ router.get('/:id', function(req,res,next){
       .status(403)
       .json({message: 'Params Request', error: true})
   }
-  let movie = Movie[req.params.id]
-  res.status(200).json({movie: movie})
+  // let movie = Movie[req.params.id]
+  let _id = req.params.id
+  Movie.findOne({_id: _id}, (err, movie) => {
+    if(err){
+      res
+      .status(403)
+      .json({message: 'Error Request', error: true})
+    }
+    res.status(200).json({movie: movie})
+  })
 })
 
 router.put('/:id', function(req,res,next){
   console.log('PUT: ', req.params.id)
   if(!req.params.id && !req.body){
-    res
-      .status(403)
-      .json({message: 'Params Request', error: true})
+    res.status(403).json({message: 'Params Request', error: true})
   }
+  let _id = req.params.id
   let new_movie = req.body
-  new_movie._id = parseInt(req.params.id, 10)
-  // let old_movie = Movie[req.params.id]
-  new_movie = Movie[req.params.id]
-  res.status(200).json({movie: new_movie})
+  Movie.findByIdAndUpdate(_id, {
+    $set: {
+      title: new_movie.title,
+      year: new_movie.year
+    }
+  }, {new: true}, (err, mov) => {
+    res.status(200).json({movie: mov})
+  })
 })
 
 router.delete('/:id', function(req,res,next){
@@ -59,9 +92,14 @@ router.delete('/:id', function(req,res,next){
       .status(403)
       .json({message: 'Params Request', error: true})
   }
-  let id = req.params.id
-  delete Movie[id]
-  res.status(400).json({})
+  let _id = req.params.id
+  // delete Movie[id]
+  Movie.findByIdAndRemove(_id, (err, done) => {
+    if(err){
+      res.status(403).json({message: 'Error Request', error: true})
+    }
+    res.status(400).json({})
+  })
 })
 
 module.exports = router;

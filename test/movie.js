@@ -3,6 +3,8 @@
 let request = require('supertest-as-promised')
 const _ = require('lodash')
 const api = require('../app')
+const mongoose = require('mongoose')
+const config = require('../lib/config/')
 // defining host
 const host = api
 
@@ -10,6 +12,16 @@ const host = api
 request = request(host)
 
 describe('movie route', function(){
+
+  before(() => {
+    mongoose.connect(config.database)
+  })
+
+  after((done) => {
+    mongoose.disconnect(done)
+    mongoose.models = {}
+  })
+
   describe('POST Request to Host', function(){
     it('this should create a movie', function(done){
 
@@ -137,7 +149,6 @@ describe('movie route', function(){
         "title": "Pulp Fiction",
         "year": "2015"
       }
-
       request
         .post('/movie')
         .set('Accept', 'application/json')
@@ -148,6 +159,7 @@ describe('movie route', function(){
         movie_id = res.body.movie._id
         return request
           .put('/movie/' + movie_id)
+          .send(movie)
           .set('Accept', 'application/json')
           .expect(200)
           .expect('Content-Type', /application\/json/)
