@@ -27,4 +27,15 @@ router.get('/', function(req,res,next){
   res.status(200).json({movies: _.values(Movie)})
 })
 
+router.get('/:id', function(req,res,next){
+  console.log('GET: ', req.params.id)
+  if(!req.params.id){
+    res
+      .status(403)
+      .json({message: 'Params Request', error: true})
+  }
+  let movie = Movie[req.params.id]
+  res.status(200).json({movie: movie})
+})
+
 module.exports = router;
