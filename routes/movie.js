@@ -38,4 +38,18 @@ router.get('/:id', function(req,res,next){
   res.status(200).json({movie: movie})
 })
 
+router.put('/:id', function(req,res,next){
+  console.log('PUT: ', req.params.id)
+  if(!req.params.id && !req.body){
+    res
+      .status(403)
+      .json({message: 'Params Request', error: true})
+  }
+  let new_movie = req.body
+  new_movie._id = parseInt(req.params.id, 10)
+  // let old_movie = Movie[req.params.id]
+  new_movie = Movie[req.params.id]
+  res.status(200).json({movie: new_movie})
+})
+
 module.exports = router;
