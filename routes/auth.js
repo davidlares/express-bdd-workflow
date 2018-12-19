@@ -1,9 +1,10 @@
 "use strict"
-
 const express = require('express');
-const router = express.Router();
+const jwt = require('jsonwebtoken')
 const User = require('../lib/models/user')
+const config = require('../lib/config')
 const crypto = require('crypto'), algorithm = 'aes-256-ctr', password = 'davidhi'
+const router = express.Router();
 
 function encrypt(text){
   let cipher = crypto.createCipher(algorithm, password)
@@ -20,29 +21,26 @@ function decrypt(text){
 }
 
 router.post('/', function(req, res, next) {
+  console.log("POST AUTH")
   if(!req.body){
-    res.status(403).json({error: true, message: "Body empty"})
+    res.status(403).json({error: true, message: 'Body empty'})
   }
   let _user = req.body
   User.findOne({username: _user.username}, (err, user) => {
-    if(err) {
-      res.status(403).json({error: true, message: err})
-    } else if(user){
-      if(decrypt(user.password) === _user.password) {
-        res.status(201).json({user: user})
+    if(err){
+      res.status(403).json({error: true, message: 'Error'})
+    } else if(user) {
+      if(user.password === encrypt(_user.password)){
+        let token = jwt.sign(user.toJSON(), config.secret, {
+          expiresIn: '24hr'
+        })
+        console.log(token)
+        res.status(201).json({token: token})
       } else {
-        res.status(403).json({message: "User exists", error: true})
+        res.status(403).json({error: true, message: 'User not found'})
       }
-    } else {
-      new User({
-        username: _user.username,
-        password: encrypt(_user.password)
-      })
-      .save((err, user) => {
-        res.status(201).json({user: user.name  })
-      })
     }
   })
-});
+})
 
 module.exports = router;
