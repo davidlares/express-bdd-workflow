@@ -6,7 +6,17 @@
 
 ## BDD
 
- Primeramente deberás tener una aplicación creada en la plaforma de developers de FB y configurar el producto Facebook Login con sus  respectivos rutas Callbacks, tener Node.js y MongoDB instalados.
+ Es una práctica enfocada en el desarrollo guiado por el comportamiento
+
+ En pocas palabras, beneficia al desarrollo en
+
+  - Centrarse en lo importante para la aplicación web
+  - A diferencia de TDD, la meta es BDD es Dado => Cuando => Entonces
+  - Buscar simular escenarios, explicando lo siguiente:
+
+    - Dado tal
+    - Cuando un escenario haga algo
+    - Pasa algo
 
 ## Taxonomía
 
@@ -49,7 +59,7 @@
   - SuperTest -> generar peticiones HTTP a la aplicación.
 
 ## Uso
-  
+
   - npm start (servidor web)
   - npm test (pruebas BDD)
 
