@@ -28,9 +28,8 @@ router.post('/', function(req, res, next) {
     if(err) {
       res.status(403).json({error: true, message: err})
     } else if(user){
-      if(decrypt(user.password) === _user.password) {
-        res.status(201).json({user: user})
-        // res.status(201).json({user: user})
+      if(user.password === encrypt(_user.password)) {
+        res.status(201).json({user: {username: user.username, _id: user._id}})
       } else {
         res.status(403).json({message: "User exists", error: true})
       }
@@ -40,7 +39,8 @@ router.post('/', function(req, res, next) {
         password: encrypt(_user.password)
       })
       .save((err, user) => {
-        res.status(201).json({user: user.username })
+        console.log(err, user)
+        res.status(201).json({ user: {username: user.username, _id: user._id}})
       })
     }
   })

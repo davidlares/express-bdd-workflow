@@ -27,7 +27,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 // con auth -> rutas seguras
-// app.use(auth_middleware)
+app.use(auth_middleware)
 app.use('/movie', movieRouter);
 
 // catch 404 and forward to error handler
