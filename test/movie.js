@@ -24,30 +24,72 @@ describe('movie route', function(){
 
   describe('POST Request to Host', function(){
     it('this should create a movie', function(done){
-
+      // let user = {
+      //   'username': 'davidlares',
+      //   'password': 'secret'
+      // }
       let movie = {
         'title': 'Movie Title',
         'year': '2012'
       }
 
-      request
-        .post('/movie')
-        .set('Accept', 'application/json')
-        .send(movie)
-        .expect(201)
-        .expect('Content-Type', /application\/json/)
-      .end((err, res) => {
-        let body = res.body
-        expect(body).to.have.property('movie')
-        movie = body.movie
-        expect(movie).to.have.property('title', 'Movie Title')
-        expect(movie).to.have.property('year', '2012')
-        expect(movie).to.have.property('_id')
-        // all expect have a callback at the start and when it finish
-        done(err)
+      // request
+      //   .post('/user')
+      //   .set('Accept', 'application/json')
+      //   .send(user)
+      //   .expect(201)
+      //   .expect('Content-Type', /application\/json/)
+      // .then((res) => {
+      //   let _user = res.body.user
+      //   console.log(_user)
+      //   _user.password = user.password
+      //   request
+      //     .post('/auth')
+      //     .set('Accept', 'application/json')
+      //     .send(_user)
+      //     .expect(201)
+      //     .expect('Content-Type', /application\/json/)
+      //   })
+      //   .then((res) => {
+      //     // let token = res.body.token
+      //     request
+      //       .post('/movie')
+      //       .set('Accept', 'application/json')
+      //       // .set('x-access-token', token)
+      //       .send(movie)
+      //       .expect(201)
+      //       .expect('Content-Type', /application\/json/)
+      //   })
+      //   .then((res) => {
+      //     let body = res.body
+      //     expect(body).to.have.property('movie')
+      //     movie = body.movie
+      //     expect(movie).to.have.property('title', 'Movie Title')
+      //     expect(movie).to.have.property('year', '2012')
+      //     expect(movie).to.have.property('_id')
+      //     // all expect have a callback at the start and when it finish
+      //     done()
+      //   })
+
+        request
+          .post('/movie')
+          .set('Accept', 'application/json')
+          // .set('x-access-token', token)
+          .send(movie)
+          .expect(201)
+          .expect('Content-Type', /application\/json/)
+        .end((err, res) => {
+            let body = res.body
+            expect(body).to.have.property('movie')
+            movie = body.movie
+            expect(movie).to.have.property('title', 'Movie Title')
+            expect(movie).to.have.property('year', '2012')
+            expect(movie).to.have.property('_id')
+            done()
+        })
+
       })
     })
-  })
 
   describe('GET Request', function(){
     it('should get all movies', function(done){

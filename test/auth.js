@@ -22,7 +22,7 @@ describe('users auth route', function(){
   })
 
   describe('POST Request to Host for auth', function(){
-    it.only('this should auth a user', function(done){
+    it('this should auth a user', function(done){
       let user = {
         'username': 'davidlares',
         'password': 'secret'

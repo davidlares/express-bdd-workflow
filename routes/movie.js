@@ -7,16 +7,11 @@ const Movie = require('../lib/models/movie')
 
 // temporary BD
 // var Movie = {}
-
-/* GET users listing. */
 router.post('/', function(req, res, next) {
   console.log('POST: movie', req.body)
   if(!req.body){
-    res
-      .status(403)
-      .json({message: 'Empty Request', error: true})
+    res.status(403).json({message: 'Empty Request', error: true})
   }
-
   let _movie = req.body
   new Movie({
     title: _movie.title,
@@ -24,16 +19,13 @@ router.post('/', function(req, res, next) {
   })
   .save((err, movie) => {
     if(err){
-      res
-        .status(403)
-        .json({message: 'Error Request', error: true})
+      res.status(403).json({message: 'Error Request', error: true})
     }
     // _movie._id = Date.now()
     // Movie[_movie._id] = _movie
     // res.status(201).json({movie: Movie[_movie._id]})
     res.status(201).json({movie: movie})
   })
-
 });
 
 router.get('/', function(req,res,next){

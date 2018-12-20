@@ -33,15 +33,15 @@ describe('users route', function(){
         .send(user)
         .expect(201)
         .expect('Content-Type', /application\/json/)
-        .end((err, res) => {
-          let body = res.body
-          expect(body).to.have.property('user')
-          let user = body.user
-          // expect(user).to.have.property('_id')
-          // expect(user).to.have.property('password')
-          expect(user).to.have.property('username','davidlares')
-          done(err)
-        })
+      .end((err, res) => {
+        let body = res.body
+        expect(body).to.have.property('user')
+        let user = body.user
+        // expect(user).to.have.property('_id')
+        // expect(user).to.have.property('password')
+        expect(user).to.have.property('username','davidlares')
+        done(err)
+      })
     })
   })
 })

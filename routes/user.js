@@ -30,6 +30,7 @@ router.post('/', function(req, res, next) {
     } else if(user){
       if(decrypt(user.password) === _user.password) {
         res.status(201).json({user: user})
+        // res.status(201).json({user: user})
       } else {
         res.status(403).json({message: "User exists", error: true})
       }
@@ -39,7 +40,7 @@ router.post('/', function(req, res, next) {
         password: encrypt(_user.password)
       })
       .save((err, user) => {
-        res.status(201).json({user: user.name  })
+        res.status(201).json({user: user.username })
       })
     }
   })

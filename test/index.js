@@ -2,6 +2,8 @@
 
 let request = require('supertest-as-promised')
 const api = require('../app')
+const mongoose = require('mongoose')
+const config = require('../lib/config')
 // defining host
 const host = api
 
@@ -10,6 +12,15 @@ request = request(host)
 
 // first scenario
 describe('Index Route, Hello World', function(){
+
+  before(() => {
+    mongoose.connect(config.database)
+  })
+
+  after((done) => {
+    mongoose.disconnect(done)
+    mongoose.models = {}
+  })
   // assertion
   describe('GET /', function(){
     // should expect (expectation)
