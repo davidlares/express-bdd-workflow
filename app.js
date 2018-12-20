@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose')
 var config = require('./lib/config')
 var logger = require('morgan');
+var cors = require('cors')
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
@@ -21,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(cors())
 // rutas inseguras
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
