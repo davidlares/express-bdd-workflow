@@ -1,70 +1,70 @@
-## DavidBDD
+## BDD workflow
 
- Desarollo de una API referencial bajo NodeJS y Express generator para la demostración de desarrollos orientados a comportamientos (test BDD).
+Development of a referential API using NodeJS and Express generator for demonstrating behavior-oriented development (BDD testing).
 
- Consiste en un CRUD de objetos `peliculas` (en sus campos `titles` y `year`), protección de rutas bajo middlewares y una persistencia bajo una base de datos no relacional.
+It consists of a CRUD of `movies` objects (in their `titles` and `year` fields), route protection using middleware, and persistence using a non-relational database.
 
 ## BDD
 
- Es una práctica enfocada en el desarrollo guiado por el comportamiento
+It is a practice focused on behavior-driven development.
 
- En pocas palabras, beneficia al desarrollo en
+In short, it benefits development in:
 
-  - Centrarse en lo importante para la aplicación web
-  - A diferencia de TDD, la meta es BDD es Dado => Cuando => Entonces
-  - Buscar simular escenarios, explicando lo siguiente:
+- Focus on what is important for the web application.
+- Unlike TDD, the goal of BDD is Given => When => Then.
+- Seek to simulate scenarios, explaining the following:
 
-    - Dado tal
-    - Cuando un escenario haga algo
-    - Pasa algo
+- Given such
+- When a scenario does something
+- Something happens.
 
-## Taxonomía
+## Taxonomy
 
-  POST: /movie 201
-  crear una pelicula
+POST: /movie 201
+create a movie.
 
-  GET: /movie 200
-  obtener todas las peliculas
+GET: /movie 200
+get all movies.
 
-  GET: /movie/:id 200
-  obtener una sola pelicula
+GET: /movie/:id 200
+get a single movie.
 
-  PUT /movie/:id 200
-  modificar una pelicula
+PUT /movie/:id 200
+modify a movie.
 
-  DELETE /movie/:id 400
-  eliminar una pelicula
+DELETE /movie/:id 400
+delete a movie.
 
-  POST /user 201
-  crear un usuario
+POST /user 201
+create a user.
 
-  GET /user/:id 200
-  obtiene un usuario
+GET /user/:id 200
+get a user.
 
-  PUT /user/:id 200
-  actualiza al usuario
+PUT /user/:id 200
+updates the user
 
-  DELETE /user/:id 400
-  elimina un usuario
+DELETE /user/:id 400
+deletes a user
 
-  POST /auth 201
-  token para usuario
+POST /auth 201
+token for user
 
-## Dependencias
+## Dependencies
 
-  - express -> Framework web minimalista de NodeJS.
-  - mongoose -> ORM de bases de datos no relacionales.
-  - mocha -> Framework para pruebas automizadas de forma sencilla y generar escenarios.
-  - Chai as Promises -> generar espectativas en promesas.
-  - SuperTest -> generar peticiones HTTP a la aplicación.
+- express -> Minimalist NodeJS web framework.
+- mongoose -> ORM for non-relational databases.
+- mocha -> Framework for simple automated testing and scenario generation.
+- Chai as Promises -> generate expectations in promises.
+- SuperTest -> generate HTTP requests to the application.
+  
+## Usage
 
-## Uso
+  - npm start (web server)
+  - npm test (BDD tests)
 
-  - npm start (servidor web)
-  - npm test (pruebas BDD)
+## Credits
+[David Lares S](https://davidlares.com)
 
-## Créditos
-[David E Lares S](https://davidlares.com)
-
-## Licencia
+## License
 [MIT](https://opensource.org/licenses/MIT)
